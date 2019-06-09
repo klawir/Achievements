@@ -20,20 +20,9 @@ public class Controler {
     private Manager manager;
 
     @GetMapping("/")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model)
-    {
+    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
-        return "main";
-    }
-
-    @RequestMapping(value="/", method = RequestMethod.POST)
-    public String greetingSubmit(@ModelAttribute Achievement achievement, HttpSession session) {
-        String names = (String) session.getAttribute("names");
-        if (names == null) {
-            session.setAttribute("names", names);
-        }
-        System.out.println(names);
-        manager.getAchievementList().add(new Achievement(names));
+        model.addAttribute(new Achievement(name));
         return "main";
     }
 }
